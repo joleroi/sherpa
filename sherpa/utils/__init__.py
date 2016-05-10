@@ -373,7 +373,7 @@ def erfinv(y):
     return ndtri((y + 1.0) / 2.0) / numpy.sqrt(2.0)
 
 
-def filter_bins(mins, maxes, axislist):
+def filter_bins(mins, maxes, axislist, gt_operator=operator.ge):
     mask = None
 
     for lo, hi, axis in izip(mins, maxes, axislist):
@@ -392,7 +392,7 @@ def filter_bins(mins, maxes, axislist):
         else:
             # axismask = (lo <= axis) & (axis <= hi)
             axismask = (sao_fcmp(lo, axis, eps) <= 0) & \
-                       (sao_fcmp(hi, axis, eps) >= 0)
+                       (gt_operator(sao_fcmp(hi, axis, eps), 0))
 
         if mask is None:
             mask = axismask
