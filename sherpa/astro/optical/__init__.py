@@ -1,5 +1,5 @@
-# 
-#  Copyright (C) 2011  Smithsonian Astrophysical Observatory
+#
+#  Copyright (C) 2011, 2016  Smithsonian Astrophysical Observatory
 #
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -17,6 +17,19 @@
 #  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
+"""
+Optical models intended for SED Analysis
+
+The models match those used by the SpecView application [1]_,
+and are intended for un-binned one-dimensional data sets defined
+on a wavelength grid, with units of Angstroms.
+
+References
+----------
+
+.. [1] http://www.stsci.edu/institute/software_hardware/specview/
+
+"""
 
 import numpy
 from sherpa.models.parameter import Parameter, tinyval
@@ -74,6 +87,33 @@ def _extinct_interp(xtable, etable, x):
 # This model sets in edge (in Angstroms) beyond which absorption
 # is a significant feature to the spectrum or SED.
 class AbsorptionEdge(ArithmeticModel):
+    """Optical model of an absorption edge.
+
+    This model is intended to be used to modify another model (e.g.
+    by multiplying the two together). It is for use when the
+    independent axis is in wavelength units (e.g. Angstrom).
+
+    Attributes
+    ----------
+    egdew
+        The location of the edge. Above this value the model is
+        set to 1.
+    tau
+        The optical depth of the edge.
+    index
+        The exponent used for the relative distance from the edge.
+        It is a hidden parameter, with a value fixed at 3.
+
+    Notes
+    -----
+    The functional form of the model for points is::
+
+        f(x) = exp(-tau * (x / index)^3)   for x <= edgew
+
+             = 1                           otherwise
+
+    and for integrated data sets the low-edge of the grid is used.
+    """
 
     def __init__(self, name='absorptionedge'):
         self.edgew = Parameter(name, 'edgew', 5000., tinyval, frozen=True, units='angstroms')
@@ -101,6 +141,29 @@ class AbsorptionEdge(ArithmeticModel):
 
 # This model is an accretion disk continuum function.
 class AccretionDisk(ArithmeticModel):
+    """A model of emission due to an accretion disk.
+
+    It is for use when the independent axis is in Angstroms.
+
+    Attributes
+    ----------
+    ref
+        The reference wavelength, in Angstroms.
+    beta
+    ampl
+        The amplitude of the disk.
+    norm
+        The normalization value for the position. It is a hidden
+        parameter, with a value fixed at 20000.
+
+    Notes
+    -----
+    The functional form of the model for points is::
+
+        f(x) = ampl * (x / norm)^(-beta) * exp(-ref / x)
+
+    and for integrated data sets the low-edge of the grid is used.
+    """
 
     def __init__(self, name='accretiondisk'):
 
@@ -135,7 +198,7 @@ class AbsorptionGaussian(ArithmeticModel):
 
     def __init__(self, name='absorptiongaussian'):
 
-        self.fwhm = Parameter(name, 'fwhm', 100., tinyval, hard_min=tinyval, 
+        self.fwhm = Parameter(name, 'fwhm', 100., tinyval, hard_min=tinyval,
                               units="km/s")
         self.pos = Parameter(name, 'pos', 5000., tinyval, frozen=True, units='angstroms')
         self.ewidth = Parameter(name, 'ewidth', 1.)
@@ -174,7 +237,7 @@ class AbsorptionLorentz(ArithmeticModel):
 
     def __init__(self, name='absorptionlorentz'):
 
-        self.fwhm = Parameter(name, 'fwhm', 100., tinyval, hard_min=tinyval, 
+        self.fwhm = Parameter(name, 'fwhm', 100., tinyval, hard_min=tinyval,
                               units="km/s")
         self.pos = Parameter(name, 'pos', 5000., tinyval, frozen=True, units='angstroms')
         self.ewidth = Parameter(name, 'ewidth', 1.)
@@ -240,7 +303,7 @@ class OpticalGaussian(ArithmeticModel):
 
     def __init__(self, name='opticalgaussian'):
 
-        self.fwhm = Parameter(name, 'fwhm', 100., tinyval, hard_min=tinyval, 
+        self.fwhm = Parameter(name, 'fwhm', 100., tinyval, hard_min=tinyval,
                               units="km/s")
         self.pos = Parameter(name, 'pos', 5000., tinyval, frozen=True, units='angstroms')
         self.tau = Parameter(name, 'tau', 0.5)
@@ -364,7 +427,7 @@ class BlackBody(ArithmeticModel):
 
         ArithmeticModel.__init__(self, name, (self.refer, self.ampl, self.temperature))
 
-    #@modelCacher1d 
+    #@modelCacher1d
     def calc(self, p, x, xhi=None, **kwargs):
         x = numpy.asarray(x, dtype=SherpaFloat)
         c1 = 1.438786e8
@@ -383,7 +446,7 @@ class BlackBody(ArithmeticModel):
             denon = numpy.zeros_like(x)
             denon[x0] = numpy.power(x[x0], 5)
             argmin_slice = numpy.where(arg < self._argmin)[0]
-            if (len(argmin_slice) > 0): 
+            if (len(argmin_slice) > 0):
                 denon[argmin_slice] *= arg[argmin_slice] * (1.0 + 0.5 * arg[argmin_slice])
             arg = numpy.where(arg > self._argmax, self._argmax, arg)
 
@@ -406,7 +469,7 @@ class Bremsstrahlung(ArithmeticModel):
 
         ArithmeticModel.__init__(self, name, (self.refer, self.ampl, self.temperature))
 
-    #@modelCacher1d 
+    #@modelCacher1d
     def calc(self, p, x, xhi=None, **kwargs):
         x = numpy.asarray(x, dtype=SherpaFloat)
         if 0.0 == p[0]:
@@ -429,7 +492,7 @@ class BrokenPowerlaw(ArithmeticModel):
 
         ArithmeticModel.__init__(self, name, (self.refer, self.ampl, self.index1, self.index2))
 
-    #@modelCacher1d 
+    #@modelCacher1d
     def calc(self, p, x, xhi=None, **kwargs):
         if 0.0 == p[0]:
             raise ValueError('model evaluation failed, ' +
@@ -452,7 +515,7 @@ class CCM(ArithmeticModel):
 
         ArithmeticModel.__init__(self, name, (self.ebv, self.r))
 
-    #@modelCacher1d 
+    #@modelCacher1d
     def calc(self, p, x, xhi=None, **kwargs):
         x = numpy.asarray(x, dtype=SherpaFloat)
         y = numpy.zeros_like(x)
@@ -521,7 +584,7 @@ class LogAbsorption(ArithmeticModel):
 
     def __init__(self, name='logabsorption'):
 
-        self.fwhm = Parameter(name, 'fwhm', 100., tinyval, hard_min=tinyval, 
+        self.fwhm = Parameter(name, 'fwhm', 100., tinyval, hard_min=tinyval,
                               units="km/s")
         self.pos = Parameter(name, 'pos', 5000., tinyval, frozen=True, units='angstroms')
         self.tau = Parameter(name, 'tau', 0.5)
@@ -593,7 +656,7 @@ class LogEmission(ArithmeticModel):
         fmax = (arg - 1.0) * p[2] / p[1] / 2.0
 
         if (p[3] == 1.0):
-            return numpy.where(x >= p[1], fmax * numpy.power((x / p[1]), -arg), fmax * numpy.power((x / p[1]), arg)) 
+            return numpy.where(x >= p[1], fmax * numpy.power((x / p[1]), -arg), fmax * numpy.power((x / p[1]), arg))
 
         arg1 = 0.69314718 / numpy.log (1.0 + p[3] * p[0] / 2.9979e5 / 2.0)
         fmax = (arg - 1.0) * p[2] / p[1] / (1.0 + (arg - 1.0) / (arg1 - 1.0))
@@ -619,7 +682,7 @@ class Polynomial(ArithmeticModel):
         pars.append(self.offset)
         ArithmeticModel.__init__(self, name, pars)
 
-    #@modelCacher1d 
+    #@modelCacher1d
     def calc(self, p, x, xhi=None, **kwargs):
         x = numpy.asarray(x, dtype=SherpaFloat)
         y = numpy.zeros_like(x)
@@ -641,7 +704,7 @@ class Powerlaw(ArithmeticModel):
 
         ArithmeticModel.__init__(self, name, (self.refer, self.ampl, self.index))
 
-    #@modelCacher1d 
+    #@modelCacher1d
     def calc(self, p, x, xhi=None, **kwargs):
         if 0.0 == p[0]:
             raise ValueError('model evaluation failed, ' +
@@ -666,7 +729,7 @@ class Recombination(ArithmeticModel):
 
         ArithmeticModel.__init__(self, name, (self.refer, self.ampl, self.temperature, self.fwhm))
 
-    #@modelCacher1d 
+    #@modelCacher1d
     def calc(self, p, x, xhi=None, **kwargs):
         if 0.0 == p[0]:
             raise ValueError('model evaluation failed, ' +
@@ -744,7 +807,7 @@ class FM(ArithmeticModel):
     def __init__(self, name='fm'):
         self.ebv = Parameter(name, 'ebv', 0.5)  # E(B-V)
         self.x0 = Parameter(name, 'x0', 4.6)    # Position of Drude bump
-        self.width = Parameter(name, 'width', 0.06) # Width of Drude bump 
+        self.width = Parameter(name, 'width', 0.06) # Width of Drude bump
         self.c1 = Parameter(name, 'c1', 0.2)
         self.c2 = Parameter(name, 'c2', 0.1)
         self.c3 = Parameter(name, 'c3', 0.02)
