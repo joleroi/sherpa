@@ -133,7 +133,7 @@ class LikelihoodRatioResults(NoNewAttributesAfterInit):
 class LikelihoodRatioTest(NoNewAttributesAfterInit):
     """Likelihood Ratio Test.
 
-    The likelihood ratio [LRT]_, D, is defined as::
+    The likelihood ratio [1]_, D, is defined as::
 
                   (   likelihood for null model	)
         D = -2 ln -----------------------------------
@@ -151,7 +151,7 @@ class LikelihoodRatioTest(NoNewAttributesAfterInit):
     References
     ----------
 
-    .. [LRT] http://en.wikipedia.org/wiki/Likelihood-ratio_test
+    .. [1] http://en.wikipedia.org/wiki/Likelihood-ratio_test
 
     """
 

@@ -96,7 +96,7 @@ class Cash(Likelihood):
     where M(i) = S(i) + B(i) is the sum of source and background model
     amplitudes, and D(i) is the number of observed counts, in bin i.
 
-    The Cash statistic [Cash]_ is derived by (1) taking the logarithm of
+    The Cash statistic [1]_ is derived by (1) taking the logarithm of
     the likelihood function, (2) changing its sign, (3) dropping the
     factorial term (which remains constant during fits to the same
     dataset), and (4) multiplying by two::
@@ -143,7 +143,7 @@ class Cash(Likelihood):
     References
     ----------
 
-    .. [Cash] "Parameter estimation in astronomy through application of
+    .. [1] "Parameter estimation in astronomy through application of
            the likelihood ratio", Cash, W. 1979, ApJ 228, 939
            http://adsabs.harvard.edu/abs/1979ApJ...228..939C
 
@@ -163,7 +163,7 @@ class CStat(Likelihood):
     """Maximum likelihood function (XSPEC style).
 
     This is equivalent to the XSpec implementation of the
-    Cash statistic [CashInXSPEC]_ except that it requires a model to be fit
+    Cash statistic [1]_ except that it requires a model to be fit
     to the background. To handle the background in the same manner
     as XSpec, use the WStat statistic.
 
@@ -220,7 +220,7 @@ class CStat(Likelihood):
     References
     ----------
 
-    .. [CashInXSPEC] The description of the Cash statistic (`cstat`) in
+    .. [1] The description of the Cash statistic (`cstat`) in
            https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSappendixStatistics.html
 
     """
@@ -325,7 +325,7 @@ class Chi2Gehrels(Chi2):
     used. This makes it more-suitable for use with low-count data.
 
     The standard deviation for each bin is calculated using the
-    approximation from [Gehrels]_::
+    approximation from [1]_::
 
       sigma(i,S) = 1 + sqrt(N(i,s) + 0.75)
 
@@ -349,7 +349,7 @@ class Chi2Gehrels(Chi2):
     References
     ----------
 
-    .. [Gehrels] "Confidence limits for small numbers of events in
+    .. [1] "Confidence limits for small numbers of events in
            astrophysical data", Gehrels, N. 1986, ApJ, vol 303,
            p. 336-346.
            http://adsabs.harvard.edu/abs/1986ApJ...303..336G
@@ -526,11 +526,11 @@ class WStat(Likelihood):
     """Maximum likelihood function including background (XSPEC style).
 
     This is equivalent to the XSpec implementation of the
-    W statistic for CStat [WstatInXSPEC]_, and includes the background data in
+    W statistic for CStat [1]_, and includes the background data in
     the fit statistic. If a model is being fit to the background then
     the CStat statistic should be used.
 
-    The following description is taken from [WstatInXSPEC]_.
+    The following description is taken from [1]_.
 
     Suppose that each bin in the background spectrum is given its own
     parameter so that the background model is b_i = f_i. A standard fit
@@ -579,7 +579,7 @@ class WStat(Likelihood):
     References
     ----------
 
-    .. [WstatInXSPEC] The description of the W statistic (`wstat`) in
+    .. [1] The description of the W statistic (`wstat`) in
            https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSappendixStatistics.html
 
     """
