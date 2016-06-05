@@ -5370,7 +5370,7 @@ class XSedge(XSMultiplicativeModel):
 
     See Also
     --------
-    XSzedge
+    XSsmedge, XSzedge
 
     References
     ----------
@@ -5562,6 +5562,25 @@ class XShrefl(XSMultiplicativeModel):
 
 
 class XSnotch(XSMultiplicativeModel):
+    """The XSPEC notch model: absorption line, notch.
+
+    The model is described at [1]_.
+
+    Attributes
+    ----------
+    LineE
+        The line energy, in keV.
+    Width
+        The line width, in keV.
+    CvrFract
+        The covering fraction.
+
+    References
+    ----------
+
+    .. [1] https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSmodelNotch.html
+
+    """
 
     _calc =  _xspec.xsntch
 
@@ -5577,6 +5596,27 @@ class XSnotch(XSMultiplicativeModel):
 
 
 class XSpcfabs(XSMultiplicativeModel):
+    """The XSPEC pcfabs model: partial covering fraction absorption.
+
+    The model is described at [1]_.
+
+    Attributes
+    ----------
+    nH
+        The equivalent hydrogen column (in units of 10^22 atoms/cm^2).
+    CvrFract
+        The covering fraction.
+
+    See Also
+    --------
+    XSphabs, XSpwab, XSzpcfabs
+
+    References
+    ----------
+
+    .. [1] https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSmodelPcfabs.html
+
+    """
 
     _calc =  _xspec.xsabsp
 
@@ -5587,6 +5627,31 @@ class XSpcfabs(XSMultiplicativeModel):
 
 
 class XSphabs(XSMultiplicativeModel):
+    """The XSPEC phabs model: photoelectric absorption.
+
+    The model is described at [1]_.
+
+    Attributes
+    ----------
+    nH
+        The equivalent hydrogen column (in units of 10^22 atoms/cm^2).
+
+    See Also
+    --------
+    XSvphabs, XSzphabs, XSzvphabs
+
+    Notes
+    -----
+    The `set_xsxsect` function changes the cross sections used by this
+    model. The `set_xsabund` function changes the relative abundances of
+    the elements.
+
+    References
+    ----------
+
+    .. [1] https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSmodelPhabs.html
+
+    """
 
     _calc = _xspec.xsphab
 
@@ -5596,6 +5661,23 @@ class XSphabs(XSMultiplicativeModel):
 
 
 class XSplabs(XSMultiplicativeModel):
+    """The XSPEC plabs model: power law absorption.
+
+    The model is described at [1]_.
+
+    Attributes
+    ----------
+    index
+        The power-law index.
+    coef
+        The normalization.
+
+    References
+    ----------
+
+    .. [1] https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSmodelPlabs.html
+
+    """
 
     _calc =  _xspec.xsplab
 
@@ -5606,6 +5688,31 @@ class XSplabs(XSMultiplicativeModel):
 
 
 class XSpwab(XSMultiplicativeModel):
+    """The XSPEC pwab model: power-law distribution of neutral absorbers.
+
+    The model is described at [1]_.
+
+    Attributes
+    ----------
+    nHmin
+        The minimum equivalent hydrogen column (in units of
+        10^22 atoms/cm^2).
+    nHmax
+        The maximum equivalent hydrogen column (in units of
+        10^22 atoms/cm^2).
+    beta
+        The power law index for the covering fraction.
+
+    See Also
+    --------
+    XSpcfabs, XSwabs
+
+    References
+    ----------
+
+    .. [1] https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSmodelPwab.html
+
+    """
 
     _calc =  _xspec.C_xspwab
 
@@ -5617,6 +5724,21 @@ class XSpwab(XSMultiplicativeModel):
 
 
 class XSredden(XSMultiplicativeModel):
+    """The XSPEC redden model: interstellar extinction.
+
+    The model is described at [1]_.
+
+    Attributes
+    ----------
+    EBV
+        The value of E(B-v) for the line of sight to the source.
+
+    References
+    ----------
+
+    .. [1] https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSmodelRedden.html
+
+    """
 
     _calc =  _xspec.xscred
 
@@ -5626,6 +5748,31 @@ class XSredden(XSMultiplicativeModel):
 
 
 class XSsmedge(XSMultiplicativeModel):
+    """The XSPEC smedge model: smeared edge.
+
+    The model is described at [1]_.
+
+    Attributes
+    ----------
+    edgeE
+        The threshold edge, in keV.
+    MaxTau
+        The maximum absorption factor at the threshold.
+    index
+        The index for photo-electric cross-section.
+    width
+        The smearing width, in keV.
+
+    See Also
+    --------
+    XSedge, XSzedge
+
+    References
+    ----------
+
+    .. [1] https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSmodelSmedge.html
+
+    """
 
     _calc =  _xspec.xssmdg
 
@@ -5638,6 +5785,23 @@ class XSsmedge(XSMultiplicativeModel):
 
 
 class XSspexpcut(XSMultiplicativeModel):
+    """The XSPEC spexpcut model: super-exponential cutoff absorption.
+
+    The model is described at [1]_.
+
+    Attributes
+    ----------
+    Ecut
+        The e-folding energy for the absorption, in keV.
+    alpha
+        The exponent index: see [1]_ for more details.
+
+    References
+    ----------
+
+    .. [1] https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSmodelSpexpcut.html
+
+    """
 
     _calc =  _xspec.C_superExpCutoff
 
@@ -5648,6 +5812,31 @@ class XSspexpcut(XSMultiplicativeModel):
 
 
 class XSspline(XSMultiplicativeModel):
+    """The XSPEC spline model: spline modification.
+
+    The model is described at [1]_.
+
+    Attributes
+    ----------
+    Estart
+        The start x value (energy), in keV.
+    YStart
+        The start y value.
+    Yend
+        The end y value.
+    YPstart
+        The start dy/dx value.
+    YPEnd
+        The end dy/dx value.
+    Eend
+        The end x value (energy), in keV.
+
+    References
+    ----------
+
+    .. [1] https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSmodelSpline.html
+
+    """
 
     _calc =  _xspec.xsspln
 
@@ -5662,6 +5851,21 @@ class XSspline(XSMultiplicativeModel):
 
 
 class XSSSS_ice(XSMultiplicativeModel):
+    """The XSPEC sss_ice model: Einstein SSS ice absorption.
+
+    The model is described at [1]_.
+
+    Attributes
+    ----------
+    clumps
+        The ice thickness parameter.
+
+    References
+    ----------
+
+    .. [1] https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSmodelSssice.html
+
+    """
 
     _calc =  _xspec.xssssi
 
@@ -5671,6 +5875,28 @@ class XSSSS_ice(XSMultiplicativeModel):
 
 
 class XSswind1(XSMultiplicativeModel):
+    """The XSPEC swind1 model: absorption by partially ionized material with large velocity shear.
+
+    The model is described at [1]_.
+
+    Attributes
+    ----------
+    column
+        The column density, in units of 10^22 cm^2.
+    logxi
+        The log of xi: see [1]_ for more details.
+    sigma
+        The gaussian sigma for velocity smearing (v/c).
+    redshift
+        The redshift of the source.
+
+    References
+    ----------
+
+    .. [1] https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSmodelSwind1.html
+
+    """
+
 
     _calc =  _xspec.swind1
 
@@ -5683,6 +5909,30 @@ class XSswind1(XSMultiplicativeModel):
 
 
 class XSTBabs(XSMultiplicativeModel):
+    """The XSPEC TBabs model: ISM grain absorption.
+
+    The model is described at [1]_.
+
+    Attributes
+    ----------
+    nH
+        The equivalent hydrogen column (in units of 10^22 atoms/cm^2).
+
+    See Also
+    --------
+    XSTBgrain, XSTBvarabs, XSzTBabs
+
+    Notes
+    -----
+    The `set_xsabund` function changes the relative abundances of
+    the elements, in particular the "wilm" setting.
+
+    References
+    ----------
+
+    .. [1] https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSmodelTbabs.html
+
+    """
 
     _calc =  _xspec.C_tbabs
 
@@ -5692,6 +5942,41 @@ class XSTBabs(XSMultiplicativeModel):
 
 
 class XSTBgrain(XSMultiplicativeModel):
+    """The XSPEC TBgrain model: ISM grain absorption.
+
+    The model is described at [1]_.
+
+    Attributes
+    ----------
+    nH
+        The equivalent hydrogen column (in units of 10^22 atoms/cm^2).
+    h2
+        The equivalent molecular hydrogen column (in units of
+         10^22 atoms/cm^2).
+    rho
+        The grain density, in g/cm^3.
+    amin
+        The minimum grain size, in micro-meters.
+    amax
+        The maximum grain size, in micro-meters.
+    PL
+        The power-law index of grain sizes.
+
+    See Also
+    --------
+    XSTBabs, XSTBvarabs, XSzTBabs
+
+    Notes
+    -----
+    The `set_xsabund` function changes the relative abundances of
+    the elements, in particular the "wilm" setting.
+
+    References
+    ----------
+
+    .. [1] https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSmodelTbabs.html
+
+    """
 
     _calc =  _xspec.C_tbgrain
 
@@ -5706,6 +5991,48 @@ class XSTBgrain(XSMultiplicativeModel):
 
 
 class XSTBvarabs(XSMultiplicativeModel):
+    """The XSPEC TBvarabs model: ISM grain absorption.
+
+    The model is described at [1]_.
+
+    Attributes
+    ----------
+    nH
+        The equivalent hydrogen column (in units of 10^22 atoms/cm^2).
+    He, C, N, O, Ne, Na, Mg, Al, Si, S, Cl, Ar, Ca, Cr, Fe, Co, Ni
+        The abundance of the element in solar units.
+    H2
+        The equivalent molecular hydrogen column (in units of
+         10^22 atoms/cm^2).
+    rho
+        The grain density, in g/cm^3.
+    amin
+        The minimum grain size, in micro-meters.
+    amax
+        The maximum grain size, in micro-meters.
+    PL
+        The power-law index of grain sizes.
+    H_dep, He_dep, C_dep, N_dep, O_dep, Ne_dep, Na_dep, Mg_dep, Al_dep,
+    Si_dep, S_dep, Cl_dep, Ar_dep, Ca_dep, Cr_dep, Fe_dep, Co_dep, Ni_dep
+        The grain depletion fraction of the element.
+    redshift
+        The redshift of the absorber.
+
+    See Also
+    --------
+    XSTBabs, XSTBgrain, XSzTBabs
+
+    Notes
+    -----
+    The `set_xsabund` function changes the relative abundances of
+    the elements, in particular the "wilm" setting.
+
+    References
+    ----------
+
+    .. [1] https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSmodelTbabs.html
+
+    """
 
     _calc =  _xspec.C_tbvabs
 
@@ -5756,6 +6083,21 @@ class XSTBvarabs(XSMultiplicativeModel):
 
 
 class XSuvred(XSMultiplicativeModel):
+    """The XSPEC uvred model: interstellar extinction, Seaton Law.
+
+    The model is described at [1]_.
+
+    Attributes
+    ----------
+    EBV
+        The value of E(B-v) for the line of sight to the source.
+
+    References
+    ----------
+
+    .. [1] https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSmodelUvred.html
+
+    """
 
     _calc =  _xspec.xsred
 
@@ -5765,6 +6107,31 @@ class XSuvred(XSMultiplicativeModel):
 
 
 class XSvarabs(XSMultiplicativeModel):
+    """The XSPEC varabs model: photoelectric absorption.
+
+    The model is described at [1]_.
+
+    Attributes
+    ----------
+    H, He, C, N, O, Ne, Na, Mg, Al, Si, S, Cl, Ar, Ca, Cr, Fe, Co, Ni
+        See [1]_ for a description of the units.
+
+    See Also
+    --------
+    XSvphabs, XSzvarabs
+
+    Notes
+    -----
+    The `set_xsxsect` function changes the cross sections used by this
+    model. The `set_xsabund` function changes the relative abundances of
+    the elements.
+
+    References
+    ----------
+
+    .. [1] https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSmodelVarabs.html
+
+    """
 
     _calc =  _xspec.xsabsv
 
@@ -5791,6 +6158,33 @@ class XSvarabs(XSMultiplicativeModel):
 
 
 class XSvphabs(XSMultiplicativeModel):
+    """The XSPEC vphabs model: photoelectric absorption.
+
+    The model is described at [1]_.
+
+    Attributes
+    ----------
+    nH
+        The equivalent hydrogen column (in units of 10^22 atoms/cm^2).
+    He, C, N, O, Ne, Na, Mg, Al, Si, S, Cl, Ar, Ca, Cr, Fe, Co, Ni
+        The abundance of the element in solar units.
+
+    See Also
+    --------
+    XSphabs, XSvarabs, XSzphabs, XSzvphabs
+
+    Notes
+    -----
+    The `set_xsxsect` function changes the cross sections used by this
+    model. The `set_xsabund` function changes the relative abundances of
+    the elements.
+
+    References
+    ----------
+
+    .. [1] https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSmodelPhabs.html
+
+    """
 
     _calc =  _xspec.xsvphb
 
@@ -5817,6 +6211,25 @@ class XSvphabs(XSMultiplicativeModel):
 
 
 class XSwabs(XSMultiplicativeModel):
+    """The XSPEC wabs model: photoelectric absorption, Wisconsin cross-sections.
+
+    The model is described at [1]_.
+
+    Attributes
+    ----------
+    nH
+        The equivalent hydrogen column (in units of 10^22 atoms/cm^2).
+
+    See Also
+    --------
+    XSzwabs
+
+    References
+    ----------
+
+    .. [1] https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSmodelWabs.html
+
+    """
 
     _calc =  _xspec.xsabsw
 
@@ -5826,6 +6239,27 @@ class XSwabs(XSMultiplicativeModel):
 
 
 class XSwndabs(XSMultiplicativeModel):
+    """The XSPEC wndabs model: photo-electric absorption, warm absorber.
+
+    The model is described at [1]_.
+
+    Attributes
+    ----------
+    nH
+        The equivalent hydrogen column (in units of 10^22 atoms/cm^2).
+    WindowE
+        The window energy, in keV.
+
+    See Also
+    --------
+    XSzwndabs
+
+    References
+    ----------
+
+    .. [1] https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSmodelWndabs.html
+
+    """
 
     _calc =  _xspec.xswnab
 
@@ -5941,6 +6375,29 @@ class XSzhighect(XSMultiplicativeModel):
 
 
 class XSzpcfabs(XSMultiplicativeModel):
+    """The XSPEC zpcfabs model: partial covering fraction absorption.
+
+    The model is described at [1]_.
+
+    Attributes
+    ----------
+    nH
+        The equivalent hydrogen column (in units of 10^22 atoms/cm^2).
+    CvrFract
+        The covering fraction.
+    redshift
+        The redshift.
+
+    See Also
+    --------
+    XSpcfabs, XSphabs
+
+    References
+    ----------
+
+    .. [1] https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSmodelPcfabs.html
+
+    """
 
     _calc =  _xspec.xszabp
 
@@ -5952,6 +6409,33 @@ class XSzpcfabs(XSMultiplicativeModel):
 
 
 class XSzphabs(XSMultiplicativeModel):
+    """The XSPEC zphabs model: photoelectric absorption.
+
+    The model is described at [1]_.
+
+    Attributes
+    ----------
+    nH
+        The equivalent hydrogen column (in units of 10^22 atoms/cm^2).
+    redshift
+        The redshift of the absorber.
+
+    See Also
+    --------
+    XSphabs, XSvphabs, XSzvphabs
+
+    Notes
+    -----
+    The `set_xsxsect` function changes the cross sections used by this
+    model. The `set_xsabund` function changes the relative abundances of
+    the elements.
+
+    References
+    ----------
+
+    .. [1] https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSmodelPhabs.html
+
+    """
 
     _calc = _xspec.xszphb
 
@@ -5996,6 +6480,32 @@ class XSzsmdust(XSMultiplicativeModel):
 
 
 class XSzTBabs(XSMultiplicativeModel):
+    """The XSPEC zTBabs model: ISM grain absorption.
+
+    The model is described at [1]_.
+
+    Attributes
+    ----------
+    nH
+        The equivalent hydrogen column (in units of 10^22 atoms/cm^2).
+    redshift
+        The redshift of the absorber.
+
+    See Also
+    --------
+    XSTBabs, XSTBgrain, XSTBvarabs
+
+    Notes
+    -----
+    The `set_xsabund` function changes the relative abundances of
+    the elements, in particular the "wilm" setting.
+
+    References
+    ----------
+
+    .. [1] https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSmodelTbabs.html
+
+    """
 
     _calc =  _xspec.C_ztbabs
 
@@ -6006,6 +6516,33 @@ class XSzTBabs(XSMultiplicativeModel):
 
 
 class XSzvarabs(XSMultiplicativeModel):
+    """The XSPEC zvarabs model: photoelectric absorption.
+
+    The model is described at [1]_.
+
+    Attributes
+    ----------
+    H, He, C, N, O, Ne, Na, Mg, Al, Si, S, Cl, Ar, Ca, Cr, Fe, Co, Ni
+        See [1]_ for a description of the units.
+    redshift
+        The redshift of the absorber
+
+    See Also
+    --------
+    XSvarabs, XSzvphabs
+
+    Notes
+    -----
+    The `set_xsxsect` function changes the cross sections used by this
+    model. The `set_xsabund` function changes the relative abundances of
+    the elements.
+
+    References
+    ----------
+
+    .. [1] https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSmodelVarabs.html
+
+    """
 
     _calc =  _xspec.xszvab
 
@@ -6046,6 +6583,35 @@ class XSzvfeabs(XSMultiplicativeModel):
 
 
 class XSzvphabs(XSMultiplicativeModel):
+    """The XSPEC vphabs model: photoelectric absorption.
+
+    The model is described at [1]_.
+
+    Attributes
+    ----------
+    nH
+        The equivalent hydrogen column (in units of 10^22 atoms/cm^2).
+    He, C, N, O, Ne, Na, Mg, Al, Si, S, Cl, Ar, Ca, Cr, Fe, Co, Ni
+        The abundance of the element in solar units.
+    redshift
+        The redshift of the absorber.
+
+    See Also
+    --------
+    XSphabs, XSvphabs, XSzphabs
+
+    Notes
+    -----
+    The `set_xsxsect` function changes the cross sections used by this
+    model. The `set_xsabund` function changes the relative abundances of
+    the elements.
+
+    References
+    ----------
+
+    .. [1] https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSmodelPhabs.html
+
+    """
 
     _calc =  _xspec.xszvph
 
@@ -6073,6 +6639,27 @@ class XSzvphabs(XSMultiplicativeModel):
 
 
 class XSzwabs(XSMultiplicativeModel):
+    """The XSPEC zwabs model: photoelectric absorption, Wisconsin cross-sections.
+
+    The model is described at [1]_.
+
+    Attributes
+    ----------
+    nH
+        The equivalent hydrogen column (in units of 10^22 atoms/cm^2).
+    redshift
+        The redshift of the absorber.
+
+    See Also
+    --------
+    XSwabs
+
+    References
+    ----------
+
+    .. [1] https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSmodelWabs.html
+
+    """
 
     _calc =  _xspec.xszabs
 
@@ -6083,6 +6670,29 @@ class XSzwabs(XSMultiplicativeModel):
 
 
 class XSzwndabs(XSMultiplicativeModel):
+    """The XSPEC zwndabs model: photo-electric absorption, warm absorber.
+
+    The model is described at [1]_.
+
+    Attributes
+    ----------
+    nH
+        The equivalent hydrogen column (in units of 10^22 atoms/cm^2).
+    WindowE
+        The window energy, in keV.
+    redshift
+        The redshift of the absorber.
+
+    See Also
+    --------
+    XSwndabs
+
+    References
+    ----------
+
+    .. [1] https://heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XSmodelWndabs.html
+
+    """
 
     _calc =  _xspec.xszwnb
 
@@ -7199,7 +7809,7 @@ class XSheilin(XSMultiplicativeModel):
         The He I column density, in 10^22 atoms/cm^2.
     b
         The b value, in km/s.
-    redshidt
+    redshift
         The redshift of the absorber.
 
     See Also
