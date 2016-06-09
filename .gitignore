@@ -107,3 +107,7 @@ extern/region-4.7/src/regparser.h
 extern/region-4.7/src/regparser.tab.h
 extern/region-4.7/src/regparser.tab.c
 extern/region-4.7/src/reglexer.c.tmp
+
+# sphinx
+api/
+
