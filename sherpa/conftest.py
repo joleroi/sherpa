@@ -33,7 +33,10 @@ known_warnings = {
     DeprecationWarning:
         ["unorderable dtypes; returning scalar but in the future this will be an error",
          "Non-string object detected for the array ordering. Please pass in 'C', 'F', 'A', or 'K' instead",
-         "using a non-integer number instead of an integer will result in an error in the future", ],
+         "using a non-integer number instead of an integer will result in an error in the future",
+         "Parameter name norm is deprecated for model RenamedPars, use ampl instead",
+         "Parameter name NORM is deprecated for model ParameterCase, use ampl instead"
+         ],
     UserWarning:
         [
             "File '/data/regression_test/master/in/sherpa/aref_sample.fits' does not have write permission.  Changing to read-only mode.",
